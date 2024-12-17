@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Percentage Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Percentage Calculator</h1>
+        <form method="POST" action="/">
+            <label>Select Calculator Type:</label>
+            <select name="calculator_type" id="calculator_type" onchange="showFields()">
+                <option value="basic">Basic Percentage</option>
+                <option value="increase_decrease">Increase/Decrease Percentage</option>
+                <option value="reverse">Reverse Percentage</option>
+                <option value="total">Total Percentage</option>
+                <option value="profit_loss">Profit/Loss Percentage</option>
+                <option value="discount">Discount Percentage</option>
+                <option value="marks">Marks Percentage</option>
+                <option value="interest">Interest Percentage</option>
+                <option value="tax">Tax Percentage</option>
+                <option value="weight">Weight Percentage</option>
+            </select>
+
+            <!-- Dynamic Fields -->
+            <div id="dynamic-fields"></div>
+
+            <button type="submit">Calculate</button>
+        </form>
+        
+        {% if result is not none %}
+            <div class="result">
+                <h2>Result:</h2>
+                <p>{{ result }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const fieldTemplates = {
+            "basic": '<input type="number" name="number" placeholder="Enter Number" required><input type="number" name="percent" placeholder="Enter Percentage" required>',
+            "increase_decrease": '<input type="number" name="old_value" placeholder="Enter Old Value" required><input type="number" name="new_value" placeholder="Enter New Value" required>',
+            "reverse": '<input type="number" name="increased_value" placeholder="Enter Increased Value" required><input type="number" name="percent" placeholder="Enter Percentage" required>',
+            "total": '<input type="number" name="value" placeholder="Enter Value" required><input type="number" name="total" placeholder="Enter Total" required>',
+            "profit_loss": '<input type="number" name="cost" placeholder="Enter Cost Price" required><input type="number" name="selling" placeholder="Enter Selling Price" required>',
+            "discount": '<input type="number" name="original_price" placeholder="Enter Original Price" required><input type="number" name="discount" placeholder="Enter Discount Percentage" required>',
+            "marks": '<input type="number" name="obtained" placeholder="Enter Marks Obtained" required><input type="number" name="total_marks" placeholder="Enter Total Marks" required>',
+            "interest": '<input type="number" name="principal" placeholder="Enter Principal Amount" required><input type="number" name="rate" placeholder="Enter Rate (%)" required><input type="number" name="time" placeholder="Enter Time (Years)" required>',
+            "tax": '<input type="number" name="price" placeholder="Enter Price" required><input type="number" name="tax" placeholder="Enter Tax Percentage" required>',
+            "weight": '<input type="number" name="part_weight" placeholder="Enter Part Weight" required><input type="number" name="total_weight" placeholder="Enter Total Weight" required>',
+        };
+
+        function showFields() {
+            const calculatorType = document.getElementById("calculator_type").value;
+            document.getElementById("dynamic-fields").innerHTML = fieldTemplates[calculatorType] || "";
+        }
+
+        window.onload = showFields;
+    </script>
+</body>
+</html>
